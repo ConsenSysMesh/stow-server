@@ -1,7 +1,11 @@
-const express = require('express')
-const app = express()
-const port = process.env.LINNIA_PORT
+require('dotenv').config();
 
-app.get('/', (req, res) => res.send('Hello World!'))
+const express = require('express');
+const app = express();
+const port = process.env.LINNIA_PORT;
 
-app.listen(port || 3000, () => console.log('Example app listening on port 3000!'))
+app.get('/', require('./routes/helloWorld'));
+
+app.listen(port || 3000, () => {
+  console.log('Linnia Server ready for action.');
+});
