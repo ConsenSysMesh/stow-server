@@ -20,8 +20,13 @@
   "dependencies": {
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
+    "ipfs-api": "^22.0.1",
+    "jasmine": "^3.1.0",
+    "linnia": "git+https://github.com/ConsenSys/linnia-js.git",
     "pg": "^7.4.3",
-    "sequelize": "^4.37.10"
+    "sequelize": "^4.37.10",
+    "truffle-contract": "^3.0.5",
+    "web3": "^1.0.0-beta.34"
   },
   "devDependencies": {
     "nodemon": "^1.17.5"
