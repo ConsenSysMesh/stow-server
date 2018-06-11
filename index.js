@@ -1,9 +1,11 @@
-const TruffleContract = require('truffle-contract')
-const server = require('./server')
+require('dotenv').config();
 
-// load config
-require('./config')
-// start jobs
-require('./jobs/watch-record-add')
+const express = require('express');
+const app = express();
+const port = process.env.LINNIA_PORT;
 
-server.start()
+app.get('/', require('./routes/helloWorld'));
+
+app.listen(port || 3000, () => {
+  console.log('Linnia Server ready for action.');
+});
