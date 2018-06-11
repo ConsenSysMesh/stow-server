@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         fields: ['owner']
       },
       {
-        unique: false,
+        unique: true,
         fields: ['dataHash']
       },
     ]
