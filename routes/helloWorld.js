@@ -1,7 +1,9 @@
-const Event = require('./../models').event;
+const Record = require('./../models').record;
 
 module.exports = (req, res) => {
-  Event.create({
-    type: 'a thing'
-  }).then(event => res.json(event));
+  Record.create({
+    dataHash: '645eytrtghijkutj5',
+    owner: 'John Doe',
+    metadata: 'Meta Data',
+  }).then(record => res.json(record));
 };
