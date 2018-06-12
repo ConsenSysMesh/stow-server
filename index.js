@@ -8,7 +8,6 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); 
 
-app.get('/', require('./routes/helloWorld'));
 app.get('/records', require('./routes/records'));
 app.get('/recordsByOwner', require('./routes/recordsByOwner'));
 app.post('/records', require('./routes/createRecord'));
