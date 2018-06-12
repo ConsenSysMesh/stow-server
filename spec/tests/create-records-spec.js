@@ -43,8 +43,8 @@ describe("CreateRecord", function() {
         dataHash: crypto.randomBytes(32).toString('hex')
       }
     }, function(err, httpResponse, body){
-      error = JSON.parse(body).error
-      expect(error).toEqual('owner is missing')
+      errors = JSON.parse(body).errors
+      expect(errors[0]).toEqual('record.owner cannot be null')
       expect(httpResponse.statusCode).toEqual(400)
       done()
     })
@@ -58,8 +58,8 @@ describe("CreateRecord", function() {
         dataHash: crypto.randomBytes(32).toString('hex')
       }
     }, function(err, httpResponse, body){
-      error = JSON.parse(body).error
-      expect(error).toEqual('metadata is missing')
+      errors = JSON.parse(body).errors
+      expect(errors[0]).toEqual('record.metadata cannot be null')
       expect(httpResponse.statusCode).toEqual(400)
       done()
     })
@@ -73,8 +73,8 @@ describe("CreateRecord", function() {
         metadata: 'meta'
       }
     }, function(err, httpResponse, body){
-      error = JSON.parse(body).error
-      expect(error).toEqual('data hash is missing')
+      errors = JSON.parse(body).errors
+      expect(errors[0]).toEqual('record.dataHash cannot be null')
       expect(httpResponse.statusCode).toEqual(400)
       done()
     })

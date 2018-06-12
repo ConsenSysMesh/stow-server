@@ -3,22 +3,7 @@ const Sequelize = require('sequelize');
 
 // This endpoint is used to add new records to the server
 module.exports = (req, res) => {
-
-  // No datahash returns 400
-  if(!req.body.dataHash){
-    res.status(400).send({ error: 'data hash is missing' })
-  }
-
-  // No owner returns 400
-  if(!req.body.owner){
-    res.status(400).send({ error: 'owner is missing' })
-  }
-
-  // No metadata returns 400
-  if(!req.body.metadata){
-    res.status(400).send({ error: 'metadata is missing' })
-  }
-
+  
   // Create the record
   Record.create({
     dataHash: req.body.dataHash,
