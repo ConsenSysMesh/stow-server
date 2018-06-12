@@ -1,8 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
   const Record = sequelize.define('record', {
-    dataHash: { type: DataTypes.STRING, primaryKey: true },
-    owner: DataTypes.STRING,
-    metadata: DataTypes.STRING,
+    dataHash: { type: DataTypes.STRING, primaryKey: true, allowNull: false },
+    owner: { type: DataTypes.STRING, allowNull: false },
+    metadata: { type: DataTypes.STRING, allowNull: false },
   }, {
     indexes: [
       {
