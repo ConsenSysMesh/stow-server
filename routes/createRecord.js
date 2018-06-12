@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 
 // This endpoint is used to add new records to the server
 module.exports = (req, res) => {
-  
+
   // Create the record
   Record.create({
     dataHash: req.body.dataHash,
@@ -13,9 +13,7 @@ module.exports = (req, res) => {
 
   // Catch errors when creting the record
   .catch(function (err) {
-    if(err.errors){
-      const errors = err.errors.map(x => x.message);
-      res.status(400).send({ errors: errors })
-    }
+    const errors = err.errors.map(x => x.message);
+    res.status(400).send({ errors: errors })
   });
 };

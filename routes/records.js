@@ -1,11 +1,13 @@
 const Record = require('./../models').record;
 
 module.exports = (req, res) => {
-  try {
-    Record.findAll().then(records => {
-      res.json(records)
-    });
-  } catch(err){
-    res.status(500).send('Error')
-  }
+  Record.findAll().then(records => {
+    res.json(records)
+  })
+  
+  // Catch errors
+  .catch(function (err) {
+    const errors = err.errors.map(x => x.message);
+    res.status(400).send({ errors: errors })
+  });
 };
