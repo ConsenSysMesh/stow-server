@@ -65,3 +65,7 @@ typings/
 
 # contract artifacts
 /artifacts
+
+# mac DS_STORE 
+.DS_Store
+.DS_Store?
