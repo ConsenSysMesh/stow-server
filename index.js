@@ -10,6 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/records', require('./routes/records'));
 app.get('/recordsByOwner', require('./routes/recordsByOwner'));
+app.get('/recordsByProperty', require('./routes/recordsByProperty'));
 app.post('/records', require('./routes/createRecord'));
 
 app.listen(port || 3000, () => {
