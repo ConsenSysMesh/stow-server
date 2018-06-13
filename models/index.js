@@ -1,3 +1,4 @@
+require('dotenv').config();
 const Sequelize = require('sequelize');
 const path = require('path');
 const fs = require('fs');
@@ -23,11 +24,12 @@ fs
     return (file.indexOf('.') !== 0) && (file !== 'index.js');
   })
   .forEach(function(file) {
-    var model = sequelize.import(path.join(__dirname, file));
-    models[model.name] = model;
+    const model = sequelize.import(path.join(__dirname, file));
+    const name = model.name.charAt(0).toUpperCase() + model.name.slice(1);
+    models[name] = model;
   });
 
-Object.keys(models).forEach(function(modelName) {
+Object.keys(models).forEach((modelName) => {
   if ("associate" in models[modelName]) {
     models[modelName].associate(models);
   }

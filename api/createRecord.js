@@ -1,4 +1,4 @@
-const Record = require('./../models').record;
+const { Record } = require('./../models');
 const Sequelize = require('sequelize');
 
 // This endpoint is used to add new records to the server
