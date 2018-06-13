@@ -6,21 +6,18 @@ const { User, Record, Permission } = require('./models');
 
 api.initialize();
 
-linnia
-  .initialize()
+linnia.initialize()
   .then(() => {
     linnia.records$.subscribe((record) => {
       Record.findOrCreate({
         where: record
-      });
+      }).catch(console.log);
     });
 
-    linnia.users$.subscribe((event) => {
+    linnia.users$.subscribe((user) => {
       User.findOrCreate({
-        where: {
-          address: event.user
-        }
-      });
+        where: user
+      }).catch(console.log);
     });
 
     linnia.permissions$.subscribe((permission) => {
@@ -29,6 +26,6 @@ linnia
           dataHash: permission.dataHash,
           userAddress: permission.viewer
         }
-      });
+      }).catch(console.log);
     });
   });

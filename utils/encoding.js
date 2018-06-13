@@ -1,13 +1,14 @@
 const multihashes = require('multihashes');
+const bs58 = require('bs58');
+const eutil = require('ethereumjs-util');
 
-const hexEncodedBytesToIPFSHash = (bytes) => {
-  const truncated = bytes.substring(2, bytes.length);
-  const buffer = Buffer.from(truncated, "hex");
-  const encoded = multihashes.encode(buffer, 18)
-  const bs58String = multihashes.toB58String(encoded);
+const hexEncodedBytesToIPFSPath = (bytes) => {
+  const buffer = eutil.toBuffer(bytes);
+  const encoded = multihashes.encode(buffer, 18, 32)
+  const bs58String = bs58.encode(encoded);
   return bs58String;
 };
 
 module.exports = {
-  hexEncodedBytesToIPFSHash
+  hexEncodedBytesToIPFSPath
 };

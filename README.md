@@ -33,17 +33,9 @@ LINNIA_HUB_ADDRESS=0x3af86b00df7457acd464525f9bb303190c7d5411
 Returns all the records in the server with no arguments. The owner argument and the property are for filtering purpose.
 
 
+### [GET] /users/${address}/permissioned-records
 
-### [POST] /records
-
-#### Receives:
-
- - [address] owner
- - [string] metadata
- - [string] dataHash
-
-Creates a new record in the database. This method is going to be used to get the data that is added to the contracts and keep it associated with the metadata and address in the server. This method does not create a transaction and does not modifies any data in the blockchain.
-
+Returns all of the records the user has permission to see.
 
 
 ## Run Server

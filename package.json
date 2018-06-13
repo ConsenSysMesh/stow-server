@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/jasmine-node spec",
+    "test": "jasmine-node spec",
     "start": "nodemon index.js"
   },
   "repository": {
@@ -18,11 +18,13 @@
   },
   "homepage": "https://github.com/ConsenSys/linnia-server#readme",
   "dependencies": {
+    "bs58": "^4.0.1",
     "dotenv": "^6.0.0",
+    "ethereumjs-util": "^5.2.0",
     "express": "^4.16.3",
     "ipfs-api": "^22.0.1",
     "jasmine": "^3.1.0",
-    "linnia": "git+https://git@github.com/consensys/linnia-js.git#2a345d3d9a09f2ac223a25f006d43e0a1e7de95a",
+    "linnia": "git+ssh://git@github.com/consensys/linnia-js.git#2a345d3d9a09f2ac223a25f006d43e0a1e7de95a",
     "pg": "^7.4.3",
     "rxjs": "^6.2.1",
     "sequelize": "^4.37.10",

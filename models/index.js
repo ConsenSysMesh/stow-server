@@ -9,11 +9,15 @@ const password = process.env.LINNIA_DB_PASSWORD;
 const host = process.env.LINNIA_DB_HOST || 'localhost';
 const port = process.env.LINNIA_DB_PORT || 5432;
 const dialect = 'postgres';
+const logging = process.env.LINNIA_DB_LOGGING || false;
+const operatorsAliases = false;
 
 const sequelize = new Sequelize(name, user, password, {
   host,
   port,
-  dialect
+  dialect,
+  logging,
+  operatorsAliases
 });
 
 let models = {};

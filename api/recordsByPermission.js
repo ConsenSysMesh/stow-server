@@ -6,5 +6,7 @@ module.exports = (req, res, next) => {
   User.findOne({ where: { address } })
     .then(user => user.getPermissionedRecords())
     .then(records => res.json(records))
-    .catch(err => res.status(500).json(err));
+    .catch(() => res.status(404).json({
+      message: 'Sorry, we could not find that user!'
+    }));
 };
