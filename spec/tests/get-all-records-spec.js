@@ -1,7 +1,7 @@
 var request = require('request');
 var crypto = require("crypto");
 
-describe("CreateRecord", function() {
+describe("GetAllRecords", function() {
   var Record = require('../../models/record');
   var i;
   for (i = 0; i < 22; i++) { 

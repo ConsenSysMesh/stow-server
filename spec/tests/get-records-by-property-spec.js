@@ -3,7 +3,7 @@ var crypto = require("crypto");
 
 var dataHash = crypto.randomBytes(32).toString('hex')
 
-describe("CreateRecord", function() {
+describe("GetRecordsByProperty", function() {
   var Record = require('../../models/record');
   var i;
   for (i = 0; i < 22; i++) { 
