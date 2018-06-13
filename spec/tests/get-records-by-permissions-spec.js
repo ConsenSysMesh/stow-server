@@ -28,16 +28,6 @@ describe("GetPermissionedRecords", () => {
       .then(() => done());
   });
 
-  afterEach((done) => {
-    const { Record, User, Permission } = require('../../models');
-
-    Promise.all([
-      Record.destroy({ truncate: true, force: true }),
-      User.destroy({ truncate: true, force: true }),
-      Permission.destroy({ truncate: true, force: true })
-    ]).then(() => done());
-  });
-
   it('should return a 200', (done) => {
     request.get({url:`http://localhost:3000/users/${userOne.address}/permissioned-records`}, (err, httpResponse, body) => {
       expect(httpResponse.statusCode).toEqual(200)
