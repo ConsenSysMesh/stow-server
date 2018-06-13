@@ -15,7 +15,7 @@ describe("GetAllRecords", function() {
   }
 
   it("should be at least 20 files from Test User with property prop", function(done) {
-    request.get({url:'http://localhost:3000/recordsByProperty?owner=Test%20User&property=prop'}, function(err, httpResponse, body){
+    request.get({url:'http://localhost:3000/records?owner=Test%20User&property=prop'}, function(err, httpResponse, body){
       obj = JSON.parse(body)
       count = Object.keys(obj).length
       expect(count).toBeGreaterThan(20)
@@ -25,7 +25,7 @@ describe("GetAllRecords", function() {
   });
 
   it("should be at least 20 files with property prop", function(done) {
-    request.get({url:'http://localhost:3000/recordsByProperty?property=prop'}, function(err, httpResponse, body){
+    request.get({url:'http://localhost:3000/records?property=prop'}, function(err, httpResponse, body){
       obj = JSON.parse(body)
       count = Object.keys(obj).length
       expect(count).toBeGreaterThan(20)

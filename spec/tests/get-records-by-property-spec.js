@@ -27,7 +27,7 @@ describe("GetRecordsByProperty", function() {
   });
 
   it("should be at least 20 files from John Doe", function(done) {
-    request.get({url:'http://localhost:3000/recordsByOwner?owner=John%20Doe'}, function(err, httpResponse, body){
+    request.get({url:'http://localhost:3000/records?owner=John%20Doe'}, function(err, httpResponse, body){
       obj = JSON.parse(body)
       count = Object.keys(obj).length
       expect(count).toBeGreaterThan(20)
