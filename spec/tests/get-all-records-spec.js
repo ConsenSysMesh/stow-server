@@ -1,7 +1,7 @@
 var request = require('request');
 var crypto = require("crypto");
 
-describe("GetAllRecords", function() {
+describe("GetAllRecords", () => {
   var Record = require('../../models/record');
   var i;
   for (i = 0; i < 22; i++) { 
@@ -11,11 +11,11 @@ describe("GetAllRecords", function() {
         metadata: 'property1 testprop prop3'+i,
         dataHash: crypto.randomBytes(32).toString('hex')
       }
-    }, function(err, httpResponse, body){})
+    }, (err, httpResponse, body) => {})
   }
 
-  it("should be at least 20 files from Test User with property prop", function(done) {
-    request.get({url:'http://localhost:3000/records?owner=Test%20User&property=prop'}, function(err, httpResponse, body){
+  it("should be at least 20 files from Test User with property prop", (done) => {
+    request.get({url:'http://localhost:3000/records?owner=Test%20User&property=prop'}, (err, httpResponse, body) => {
       obj = JSON.parse(body)
       count = Object.keys(obj).length
       expect(count).toBeGreaterThan(20)
@@ -24,8 +24,8 @@ describe("GetAllRecords", function() {
     })
   });
 
-  it("should be at least 20 files with property prop", function(done) {
-    request.get({url:'http://localhost:3000/records?property=prop'}, function(err, httpResponse, body){
+  it("should be at least 20 files with property prop", (done) => {
+    request.get({url:'http://localhost:3000/records?property=prop'}, (err, httpResponse, body) => {
       obj = JSON.parse(body)
       count = Object.keys(obj).length
       expect(count).toBeGreaterThan(20)
