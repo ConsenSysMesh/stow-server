@@ -1,7 +1,7 @@
-var request = require('request');
-var crypto = require("crypto");
+const request = require('request');
+const crypto = require("crypto");
 
-var dataHash = crypto.randomBytes(32).toString('hex')
+const dataHash = crypto.randomBytes(32).toString('hex')
 
 describe("CreateRecord", () => {
   it("should create a record and return 200", (done) => {
@@ -26,7 +26,7 @@ describe("CreateRecord", () => {
         dataHash: dataHash
       }
     }, (err, httpResponse, body) => {
-      errors = JSON.parse(body).errors
+      const errors = JSON.parse(body).errors
       expect(errors[0]).toEqual('dataHash must be unique')
       expect(httpResponse.statusCode).toEqual(400)
       done()
@@ -41,7 +41,7 @@ describe("CreateRecord", () => {
         dataHash: crypto.randomBytes(32).toString('hex')
       }
     }, (err, httpResponse, body) => {
-      errors = JSON.parse(body).errors
+      const errors = JSON.parse(body).errors
       expect(errors[0]).toEqual('record.owner cannot be null')
       expect(httpResponse.statusCode).toEqual(400)
       done()
@@ -56,7 +56,7 @@ describe("CreateRecord", () => {
         dataHash: crypto.randomBytes(32).toString('hex')
       }
     }, (err, httpResponse, body) => {
-      errors = JSON.parse(body).errors
+      const errors = JSON.parse(body).errors
       expect(errors[0]).toEqual('record.metadata cannot be null')
       expect(httpResponse.statusCode).toEqual(400)
       done()
@@ -71,7 +71,7 @@ describe("CreateRecord", () => {
         metadata: 'meta'
       }
     }, (err, httpResponse, body) => {
-      errors = JSON.parse(body).errors
+      const errors = JSON.parse(body).errors
       expect(errors[0]).toEqual('record.dataHash cannot be null')
       expect(httpResponse.statusCode).toEqual(400)
       done()

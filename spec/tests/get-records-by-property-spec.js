@@ -1,7 +1,7 @@
-var request = require('request');
-var crypto = require("crypto");
+const request = require('request');
+const crypto = require("crypto");
 
-var dataHash = crypto.randomBytes(32).toString('hex')
+const dataHash = crypto.randomBytes(32).toString('hex')
 
 describe("GetRecordsByProperty", () => {
   var i;
@@ -17,8 +17,8 @@ describe("GetRecordsByProperty", () => {
 
   it("should be at least 20 files", (done) => {
     request.get({url:'http://localhost:3000/records'}, (err, httpResponse, body)=> {
-      obj = JSON.parse(body)
-      count = Object.keys(obj).length
+      const obj = JSON.parse(body)
+      const count = Object.keys(obj).length
       expect(count).toBeGreaterThan(20)
       expect(httpResponse.statusCode).toEqual(200)
       done()
@@ -27,8 +27,8 @@ describe("GetRecordsByProperty", () => {
 
   it("should be at least 20 files from John Doe", (done) => {
     request.get({url:'http://localhost:3000/records?owner=John%20Doe'}, (err, httpResponse, body) => {
-      obj = JSON.parse(body)
-      count = Object.keys(obj).length
+      const obj = JSON.parse(body)
+      const count = Object.keys(obj).length
       expect(count).toBeGreaterThan(20)
       expect(httpResponse.statusCode).toEqual(200)
       done()

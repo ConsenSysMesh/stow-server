@@ -1,5 +1,5 @@
-var request = require('request');
-var crypto = require("crypto");
+const request = require('request');
+const crypto = require("crypto");
 
 describe("GetAllRecords", () => {
   var i;
@@ -15,8 +15,8 @@ describe("GetAllRecords", () => {
 
   it("should be at least 20 files from Test User with property prop", (done) => {
     request.get({url:'http://localhost:3000/records?owner=Test%20User&property=prop'}, (err, httpResponse, body) => {
-      obj = JSON.parse(body)
-      count = Object.keys(obj).length
+      const obj = JSON.parse(body)
+      const count = Object.keys(obj).length
       expect(count).toBeGreaterThan(20)
       expect(httpResponse.statusCode).toEqual(200)
       done()
@@ -25,8 +25,8 @@ describe("GetAllRecords", () => {
 
   it("should be at least 20 files with property prop", (done) => {
     request.get({url:'http://localhost:3000/records?property=prop'}, (err, httpResponse, body) => {
-      obj = JSON.parse(body)
-      count = Object.keys(obj).length
+      const obj = JSON.parse(body)
+      const count = Object.keys(obj).length
       expect(count).toBeGreaterThan(20)
       expect(httpResponse.statusCode).toEqual(200)
       done()
