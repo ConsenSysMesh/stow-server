@@ -2,7 +2,6 @@ var request = require('request');
 var crypto = require("crypto");
 
 describe("GetAllRecords", () => {
-  var Record = require('../../models/record');
   var i;
   for (i = 0; i < 22; i++) { 
     request.post({url:'http://localhost:3000/records', 

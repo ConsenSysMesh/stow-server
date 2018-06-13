@@ -4,7 +4,6 @@ var crypto = require("crypto");
 var dataHash = crypto.randomBytes(32).toString('hex')
 
 describe("GetRecordsByProperty", () => {
-  var Record = require('../../models/record');
   var i;
   for (i = 0; i < 22; i++) { 
     request.post({url:'http://localhost:3000/records', 

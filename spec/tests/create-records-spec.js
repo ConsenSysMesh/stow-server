@@ -4,8 +4,6 @@ var crypto = require("crypto");
 var dataHash = crypto.randomBytes(32).toString('hex')
 
 describe("CreateRecord", () => {
-  var Record = require('../../models/record');
-
   it("should create a record and return 200", (done) => {
     request.post({url:'http://localhost:3000/records', 
       form: {
