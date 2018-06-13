@@ -14,7 +14,6 @@ module.exports = (req, res) => {
 
   // Catch errors
   .catch(function (err) {
-    const errors = err.errors.map(x => x.message);
-    res.status(400).send({ errors: errors })
+    res.status(500).send('Error')
   });
 };
