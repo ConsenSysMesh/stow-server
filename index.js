@@ -1,16 +1,31 @@
 require('dotenv').config();
 
-const express = require('express');
-const app = express();
-const port = process.env.LINNIA_PORT;
-const bodyParser = require('body-parser');
+const api = require('./api');
+const linnia = require('./services/linnia');
+const { User, Record, Permission } = require('./models');
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true })); 
+api.initialize();
 
-app.get('/records', require('./routes/records'));
-app.post('/records', require('./routes/createRecord'));
+linnia.initialize()
+  .then(() => {
+    linnia.records$.subscribe((record) => {
+      Record.findOrCreate({
+        where: record
+      }).catch(console.log);
+    });
 
-app.listen(port || 3000, () => {
-  console.log('Linnia Server ready for action.');
-});
+    linnia.users$.subscribe((user) => {
+      User.findOrCreate({
+        where: user
+      }).catch(console.log);
+    });
+
+    linnia.permissions$.subscribe((permission) => {
+      Permission.findOrCreate({
+        where: {
+          dataHash: permission.dataHash,
+          userAddress: permission.viewer
+        }
+      }).catch(console.log);
+    });
+  });

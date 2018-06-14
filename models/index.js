@@ -1,3 +1,4 @@
+require('dotenv').config();
 const Sequelize = require('sequelize');
 const path = require('path');
 const fs = require('fs');
@@ -8,11 +9,15 @@ const password = process.env.LINNIA_DB_PASSWORD;
 const host = process.env.LINNIA_DB_HOST || 'localhost';
 const port = process.env.LINNIA_DB_PORT || 5432;
 const dialect = 'postgres';
+const logging = process.env.LINNIA_DB_LOGGING || false;
+const operatorsAliases = false;
 
 const sequelize = new Sequelize(name, user, password, {
   host,
   port,
-  dialect
+  dialect,
+  logging,
+  operatorsAliases
 });
 
 let models = {};
@@ -23,11 +28,12 @@ fs
     return (file.indexOf('.') !== 0) && (file !== 'index.js');
   })
   .forEach(function(file) {
-    var model = sequelize.import(path.join(__dirname, file));
-    models[model.name] = model;
+    const model = sequelize.import(path.join(__dirname, file));
+    const name = model.name.charAt(0).toUpperCase() + model.name.slice(1);
+    models[name] = model;
   });
 
-Object.keys(models).forEach(function(modelName) {
+Object.keys(models).forEach((modelName) => {
   if ("associate" in models[modelName]) {
     models[modelName].associate(models);
   }
