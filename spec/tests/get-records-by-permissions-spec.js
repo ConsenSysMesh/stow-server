@@ -1,5 +1,8 @@
-const { userOne, userTwo, recordOne } = require('./../mocks');
 const request = require('request');
+const mocks = require('./../mocks');
+const userOne = mocks.userOne;
+const userTwo = mocks.userTwo;
+const recordOne = mocks.recordOne;
 
 describe("GetPermissionedRecords", () => {
   beforeEach(async (done) => {
