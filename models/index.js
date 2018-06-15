@@ -2,10 +2,11 @@ require('dotenv').config();
 const Sequelize = require('sequelize');
 const path = require('path');
 const fs = require('fs');
+const isTesting = process.env.LINNIA_IS_TESTING;
 
-const name = process.env.LINNIA_DB_NAME;
-const user = process.env.LINNIA_DB_USERNAME;
-const password = process.env.LINNIA_DB_PASSWORD;
+const name = isTesting ? process.env.LINNIA_DB_TEST_NAME : process.env.LINNIA_DB_NAME;
+const user = isTesting ? process.env.LINNIA_DB_TEST_USERNAME : process.env.LINNIA_DB_USERNAME;
+const password = isTesting ? process.env.LINNIA_DB_TEST_PASSWORD : process.env.LINNIA_DB_PASSWORD;
 const host = process.env.LINNIA_DB_HOST || 'localhost';
 const port = process.env.LINNIA_DB_PORT || 5432;
 const dialect = 'postgres';

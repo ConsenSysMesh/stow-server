@@ -1,22 +1,25 @@
 const request = require('request');
 const crypto = require("crypto");
-const mocks = require('./../mocks');
+const mocks = require('./../support/mocks');
+const { cleanDatabase } = require('./../support/helpers');
 
 describe("GetRecord", () => {
-  beforeEach(async (done) => {
-    const { Record, User } = require('../../models');
+  beforeEach(cleanDatabase);
 
-    const record = await Record.findOrCreate({
-      where: {
-        dataHash: mocks.recordOne.dataHash,
-        metadata: mocks.recordOne.metadata,
-        dataUri: mocks.recordOne.dataUri,
-        owner: mocks.userOne.address
-      }
+  beforeEach(async (done) => {
+    const { Record } = require('../../models');
+
+    const record = await Record.create({
+      dataHash: mocks.recordOne.dataHash,
+      metadata: mocks.recordOne.metadata,
+      dataUri: mocks.recordOne.dataUri,
+      owner: mocks.userOne.address
     });
 
     done();
   });
+
+  afterEach(cleanDatabase);
 
   it('should return the record with the data hash', (done) => {
     request.get({url:`http://localhost:3000/records/${mocks.recordOne.dataHash}`}, (err, httpResponse, body) => {

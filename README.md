@@ -19,6 +19,34 @@ LINNIA_IPFS_HOST=ipfs.infura.io
 LINNIA_IPFS_PORT=5001
 LINNIA_IPFS_PROTOCOL=https
 LINNIA_HUB_ADDRESS=0x3af86b00df7457acd464525f9bb303190c7d5411
+LINNIA_DB_TEST_NAME=linnia_test_db
+LINNIA_DB_TEST_USERNAME=linnia_user
+LINNIA_DB_TEST_PASSWORD=securepassword
+
+```
+
+## To run tests:
+
+Running integration tests requires the use of a test database. The credentials for so much be configured in the `.env` file like so:
+
+```
+LINNIA_DB_TEST_NAME=linnia_test_db
+LINNIA_DB_TEST_USERNAME=linnia_user
+LINNIA_DB_TEST_PASSWORD=securepassword
+```
+
+You can use the same database as normal, but **be warned, you will lose all of the current data in your database if you run the tests.**
+
+To run the tests, first run the server in test mode like so:
+
+```bash
+npm run test-server
+```
+
+Then, in a separate terminal window, run the tests like so:
+
+```bash
+npm run test
 ```
 
 ## End Points
