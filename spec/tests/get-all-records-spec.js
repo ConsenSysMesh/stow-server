@@ -1,16 +1,18 @@
 const request = require('request');
 const crypto = require("crypto");
-const mocks = require('./../mocks');
+const mocks = require('./../support/mocks');
+const { cleanDatabase } = require('./../support/helpers');
 
 describe("GetAllRecords", () => {
+  beforeEach(cleanDatabase);
+
   beforeEach(async (done) => {
     const { Record, User } = require('../../models');
-    const records = [];
 
-    const user = await User.findOrCreate({ where: mocks.userOne });
+    const user = await User.create(mocks.userOne);
 
     for (let i = 0; i < 20; i++) {
-      records.push({
+      await Record.create({
         owner: mocks.userOne.address,
         metadata: 'ACTIVITIES',
         dataHash: crypto.randomBytes(32).toString('hex'),
@@ -18,12 +20,10 @@ describe("GetAllRecords", () => {
       });
     }
 
-    await Promise.all([records.map(record => Record.findOrCreate({
-      where: record
-    }))]);
-
     done();
   });
+
+  afterEach(cleanDatabase);
 
   it("should be at least 2 files from Test User with property ACTIVITIES", (done) => {
     request.get({url:`http://localhost:3000/records?owner=${mocks.userOne.address}&property=ACTIVITIES`}, (err, httpResponse, body) => {
