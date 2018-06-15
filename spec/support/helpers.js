@@ -6,15 +6,13 @@ const truncate = {
 const cleanDatabase = async (done) => {
   const { User, Record, Permission } = require('./../../models');
 
-  await Promise.all([
-    Permission.destroy(truncate),
-    User.destroy(truncate),
-    Record.destroy(truncate)
-  ]);
+  await Permission.destroy(truncate);
+  await User.destroy(truncate);
+  await Record.destroy(truncate);
 
   done();
 };
 
 module.exports = {
   cleanDatabase
-}
+};

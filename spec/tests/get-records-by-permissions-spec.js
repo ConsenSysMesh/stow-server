@@ -39,8 +39,9 @@ describe("GetPermissionedRecords", () => {
     request.get({url:`http://localhost:3000/users/${mocks.userOne.address}/permissioned-records`}, (err, httpResponse, body) => {
       const parsedBody = JSON.parse(body);
       const record = parsedBody[0];
-      expect(record.owner).toEqual(userOne.address);
-      expect(record.dataHash).toEqual(recordOne.dataHash);
+      expect(record.owner).toEqual(mocks.userOne.address);
+      expect(record.dataHash).toEqual(mocks.recordOne.dataHash);
+
       done();
     });
   });

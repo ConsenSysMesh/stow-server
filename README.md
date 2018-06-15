@@ -72,12 +72,3 @@ Returns all of the records the user has permission to see.
 npm install
 npm start
 ```
-
-
-
-## Run Tests
-
-```
-jasmine-node spec/
-```
-
