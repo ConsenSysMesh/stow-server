@@ -25,7 +25,7 @@
     "express": "^4.16.3",
     "ipfs-api": "^22.0.1",
     "jasmine": "^3.1.0",
-    "linnia": "git+ssh://git@github.com/consensys/linnia-js.git#2a345d3d9a09f2ac223a25f006d43e0a1e7de95a",
+    "linnia": "git+ssh://git@github.com/consensys/linnia-js.git",
     "pg": "^7.4.3",
     "rxjs": "^6.2.1",
     "sequelize": "^4.37.10",
