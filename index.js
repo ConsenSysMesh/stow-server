@@ -1,31 +1,17 @@
 require('dotenv').config();
 
 const api = require('./api');
+const sync = require('./sync');
 const linnia = require('./services/linnia');
-const { User, Record, Permission } = require('./models');
+
+const isTesting = process.env.LINNIA_IS_TESTING;
+const shouldNotSync = process.env.LINNIA_SHOULD_NOT_SYNC;
+const shouldSync = !isTesting && !shouldNotSync;
 
 api.initialize();
 
-linnia.initialize()
-  .then(() => {
-    linnia.records$.subscribe((record) => {
-      Record.findOrCreate({
-        where: record
-      }).catch(console.log);
-    });
+if (shouldSync) {
+  linnia.initialize().then(_linnia => sync.initialize(_linnia));
+}
 
-    linnia.users$.subscribe((user) => {
-      User.findOrCreate({
-        where: user
-      }).catch(console.log);
-    });
 
-    linnia.permissions$.subscribe((permission) => {
-      Permission.findOrCreate({
-        where: {
-          dataHash: permission.dataHash,
-          userAddress: permission.viewer
-        }
-      }).catch(console.log);
-    });
-  });
