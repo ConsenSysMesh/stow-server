@@ -17,11 +17,14 @@ const serializeUser = (userEvent) => {
   };
 };
 
-const serializePermission = (permissionEvent) => {
+const serializePermission = (permissionEvent, permission) => {
   return {
     dataHash: permissionEvent.args.dataHash,
-    userAddress: permissionEvent.args.viewer
-  }
+    viewer: permissionEvent.args.viewer,
+    owner: permissionEvent.args.owner,
+    dataUri: permission.dataUri,
+    canAccess: permission.canAccess
+  };
 };
 
 module.exports = {

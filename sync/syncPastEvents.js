@@ -15,7 +15,7 @@ module.exports = (linnia) => {
     syncPastRecords(records, linnia),
     syncPastUsers(users)
   ])
-  .then(() => syncPastPermissions(permissions))
+  .then(() => syncPastPermissions(permissions, linnia))
   .catch(panic)
 };
 
@@ -43,9 +43,14 @@ const syncPastRecords = (recordsEvent, linnia) => {
     })));
 };
 
-const syncPastPermissions = (permissionsEvent) => {
+const syncPastPermissions = (permissionsEvent, linnia) => {
   return getPastEvents(permissionsEvent)
-    .then(events => events.map(serializePermission))
+    .then(events => {
+      return Promise.all(events.map((event) => {
+        return linnia.getPermission(event.args.dataHash, event.args.viewer)
+          .then(per => serializePermission(event, per));
+      }));
+    })
     .then(pers => Promise.all(pers.map((per) => {
       return Permission.findOrCreate({ where: per });
     })))

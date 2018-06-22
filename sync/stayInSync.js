@@ -8,9 +8,9 @@ const {
 module.exports = (linnia) => {
   const { users, records, permissions } = linnia.events;
 
+  syncNewPermissions(permissions, linnia);
   syncNewRecords(records, linnia);
   syncNewUsers(users);
-  syncNewPermissions(permissions);
 };
 
 const watchEvent = (event, callback) => {
@@ -41,11 +41,11 @@ const syncNewUsers = (usersEvent) => {
   });
 };
 
-const syncNewPermissions = (permissionsEvent) => {
+const syncNewPermissions = (permissionsEvent, linnia) => {
   watchEvent(permissionsEvent, (event) => {
-
-    Permission.findOrCreate({
-      where: serializePermission(event)
-    });
+    linnia.getPermission(event.args.dataHash, event.args.viewer)
+      .then(permission => Permission.findOrCreate({
+        where: serializePermission(event, permission)
+      }))
   });
 };

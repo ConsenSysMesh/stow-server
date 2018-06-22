@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       through: models.Permission,
       as: 'permissionedRecords',
       otherKey: 'dataHash',
-      sourceKey: 'address'
+      sourceKey: 'address',
+      foreignKey: 'viewer'
     });
   };
 
