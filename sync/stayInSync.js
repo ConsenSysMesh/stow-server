@@ -15,7 +15,11 @@ module.exports = (linnia) => {
 
 const watchEvent = (event, callback) => {
   event().watch((err, event) => {
-    if (!err) callback(event);
+    if (err) {
+      console.error(err);
+    } else {
+      callback(event);
+    }
   });
 };
 

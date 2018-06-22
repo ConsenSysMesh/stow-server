@@ -16,8 +16,7 @@ const eventNames = {
 };
 
 const _initialize = () => {
-  return linnia
-    .getContractInstances()
+  return linnia.getContractInstances()
     .then(getEvents);
 };
 

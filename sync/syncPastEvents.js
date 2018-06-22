@@ -5,6 +5,9 @@ const {
   serializePermission
 } = require('./serialization');
 
+const firstBlock = 0;
+const latestBlock = 'latest';
+
 module.exports = (linnia) => {
   const { records, permissions, users } = linnia.events;
 
@@ -19,8 +22,8 @@ module.exports = (linnia) => {
 const getPastEvents = (event) => {
   return new Promise((resolve, reject) => {
     return event({}, {
-      fromBlock: 0,
-      toBlock: 'latest'
+      fromBlock: firstBlock,
+      toBlock: latestBlock
     }).get((err, events) => {
       err ? reject(err) : resolve(events);
     });
@@ -58,8 +61,8 @@ const syncPastUsers = (usersEvent) => {
 };
 
 const panic = (err) => {
-  console.log('Sync failed!');
-  console.log(err);
+  console.error('Sync failed!');
+  console.error(err);
   process.exit(1);
 };
 
