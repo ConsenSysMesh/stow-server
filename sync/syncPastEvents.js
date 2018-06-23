@@ -9,13 +9,19 @@ const firstBlock = 0;
 const latestBlock = 'latest';
 
 module.exports = (linnia) => {
-  const { records, permissions, users } = linnia.events;
+  const {
+    LogRecordAdded,
+    LogAccessGranted,
+    LogUserRegistered,
+    LogAccessRevoked
+  } = linnia.events;
 
   return Promise.all([
-    syncPastRecords(records, linnia),
-    syncPastUsers(users)
+    syncPastRecords(LogRecordAdded, linnia),
+    syncPastUsers(LogUserRegistered)
   ])
-  .then(() => syncPastPermissions(permissions, linnia))
+  .then(() => syncPastPermissions(LogAccessGranted, linnia))
+  .then(() => syncPastRevokedPermissions(LogAccessRevoked))
   .catch(panic)
 };
 
@@ -53,8 +59,18 @@ const syncPastPermissions = (permissionsEvent, linnia) => {
     })
     .then(pers => Promise.all(pers.map((per) => {
       return Permission.findOrCreate({ where: per });
-    })))
+    })));
+};
 
+const syncPastRevokedPermissions = (revokeEvents) => {
+  return getPastEvents(revokeEvents)
+    .then(events => Promise.all(events.map(event => Permission.destroy({
+      where: {
+        owner: event.args.owner,
+        viewer: event.args.viewer,
+        dataHash: event.args.dataHash
+      }
+    }))));
 };
 
 const syncPastUsers = (usersEvent) => {

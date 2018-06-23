@@ -6,11 +6,17 @@ const {
 } = require('./serialization');
 
 module.exports = (linnia) => {
-  const { users, records, permissions } = linnia.events;
+  const {
+    LogAccessGranted,
+    LogRecordAdded,
+    LogUserRegistered,
+    LogAccessRevoked
+  } = linnia.events;
 
-  syncNewPermissions(permissions, linnia);
-  syncNewRecords(records, linnia);
-  syncNewUsers(users);
+  syncNewPermissions(LogAccessGranted, linnia);
+  syncRevokedPermissions(LogAccessRevoked);
+  syncNewRecords(LogRecordAdded, linnia);
+  syncNewUsers(LogUserRegistered);
 };
 
 const watchEvent = (event, callback) => {
@@ -29,6 +35,18 @@ const syncNewRecords = (recordsEvent, linnia) => {
       .then(record => Record.findOrCreate({
         where: serializeRecord(event, record)
       }));
+  });
+};
+
+const syncRevokedPermissions = (permissionsEvent) => {
+  watchEvent(permissionsEvent, (event) => {
+    Permission.destroy({
+      where: {
+        owner: event.args.owner,
+        viewer: event.args.viewer,
+        dataHash: event.args.dataHash
+      }
+    });
   });
 };
 
