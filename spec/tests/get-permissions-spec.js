@@ -8,17 +8,17 @@ describe("GetPermissionedRecords", () => {
   beforeEach(async (done) => {
     const { Record, User, Permission } = require('../../models');
 
-    const user = await User.create(mocks.userOne);
-    const otherUser = await User.create(mocks.userTwo);
+    await User.create(mocks.userOne);
+    await User.create(mocks.userTwo);
 
-    const record = await Record.create({
+    await Record.create({
       dataHash: mocks.recordOne.dataHash,
       metadata: mocks.recordOne.metadata,
       dataUri: mocks.recordOne.dataUri,
       owner: mocks.userOne.address
     });
 
-    const permission = await Permission.create({
+    await Permission.create({
       owner: mocks.userOne.address,
       dataHash: mocks.recordOne.dataHash,
       viewer: mocks.userTwo.address,
