@@ -6,11 +6,17 @@ const {
 } = require('./serialization');
 
 module.exports = (linnia) => {
-  const { users, records, permissions } = linnia.events;
+  const {
+    LogAccessGranted,
+    LogRecordAdded,
+    LogUserRegistered,
+    LogAccessRevoked
+  } = linnia.events;
 
-  syncNewRecords(records, linnia);
-  syncNewUsers(users);
-  syncNewPermissions(permissions);
+  syncNewPermissions(LogAccessGranted, linnia);
+  syncRevokedPermissions(LogAccessRevoked);
+  syncNewRecords(LogRecordAdded, linnia);
+  syncNewUsers(LogUserRegistered);
 };
 
 const watchEvent = (event, callback) => {
@@ -32,6 +38,18 @@ const syncNewRecords = (recordsEvent, linnia) => {
   });
 };
 
+const syncRevokedPermissions = (permissionsEvent) => {
+  watchEvent(permissionsEvent, (event) => {
+    Permission.destroy({
+      where: {
+        owner: event.args.owner,
+        viewer: event.args.viewer,
+        dataHash: event.args.dataHash
+      }
+    });
+  });
+};
+
 const syncNewUsers = (usersEvent) => {
   watchEvent(usersEvent, (event) => {
 
@@ -41,11 +59,11 @@ const syncNewUsers = (usersEvent) => {
   });
 };
 
-const syncNewPermissions = (permissionsEvent) => {
+const syncNewPermissions = (permissionsEvent, linnia) => {
   watchEvent(permissionsEvent, (event) => {
-
-    Permission.findOrCreate({
-      where: serializePermission(event)
-    });
+    linnia.getPermission(event.args.dataHash, event.args.viewer)
+      .then(permission => Permission.findOrCreate({
+        where: serializePermission(event, permission)
+      }))
   });
 };

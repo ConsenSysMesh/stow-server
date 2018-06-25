@@ -1,4 +1,3 @@
-const linnia = require('./../services/linnia');
 const stayInSync = require('./stayInSync');
 const syncPastEvents = require('./syncPastEvents');
 

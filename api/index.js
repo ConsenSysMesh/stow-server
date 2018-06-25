@@ -11,8 +11,8 @@ const initialize = () => {
   app.use(cors());
 
   app.get('/records', require('./records'));
-  app.get('/users/:userAddress/permissioned-records', require('./recordsByPermission'));
   app.get('/records/:dataHash', require('./recordByDataHash'));
+  app.get('/users/:address/permissions', require('./getPermissionsByUser'));
 
   app.use(errorHandler);
 
