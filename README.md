@@ -77,7 +77,7 @@ Returns all of the permissions that belong to the user, both as a viewer and as 
 	"asViewer": [],
 	"asOwner": []
 }
-
+```
 
 
 ## Run Server
