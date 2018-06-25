@@ -1,7 +1,6 @@
 const Web3 = require('web3');
 const Linnia = require('linnia');
 const IPFS = require('ipfs-api');
-const { Subject } = require('rxjs');
 const config = require('./config');
 
 const httpProvider = new Web3.providers.HttpProvider(config.httpProvider);
@@ -26,13 +25,6 @@ const eventsToTrack = [{
 const _initialize = () => {
   return linnia.getContractInstances()
     .then(getEvents);
-};
-
-const getEvent = (model, contracts) => {
-  const eventName = eventNames[model];
-  const contract = contracts[model];
-  const event = contract[eventName];
-  return event;
 };
 
 const getEvents = (contracts) => {

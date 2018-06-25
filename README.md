@@ -51,6 +51,12 @@ npm run test
 
 ## End Points
 
+### [GET] /records/${dataHash}
+
+Returns a single record that matches the dataHash provided in the URI
+
+
+
 ### [GET] /records
 
 #### Receives:
@@ -61,9 +67,17 @@ npm run test
 Returns all the records in the server with no arguments. The owner argument and the property are for filtering purpose.
 
 
-### [GET] /users/${address}/permissioned-records
 
-Returns all of the records the user has permission to see.
+### [GET] /users/${address}/permissions
+
+Returns all of the permissions that belong to the user, both as a viewer and as an owner. Response looks like follows:
+
+```json
+{
+	"asViewer": [],
+	"asOwner": []
+}
+
 
 
 ## Run Server
