@@ -8,6 +8,16 @@ Currenlty under construction
 
 The linnia-server requires a postgres database to connect to. You can either run a server locally, or connect to one that's hosted somewhere else.
 
+### Setup for postgres
+
+1. `$>createuser linnia_user --createdb`
+1. `$>createdb linnia_db -U linnia_user`
+1. `$>createdb linnia_test_db -U linnia_user`
+
+See:https://www.codementor.io/engineerapart/getting-started-with-postgresql-on-mac-osx-are8jcopb
+
+### .env setup
+
 To configure the database, ethereum and ipfs connections, you must create a `.env` file in the root of the application and set your environment variables. Here's an example of a sample file:
 
 ```
