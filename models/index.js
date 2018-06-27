@@ -9,9 +9,10 @@ const user = isTesting ? process.env.LINNIA_DB_TEST_USERNAME : process.env.LINNI
 const password = isTesting ? process.env.LINNIA_DB_TEST_PASSWORD : process.env.LINNIA_DB_PASSWORD;
 const host = process.env.LINNIA_DB_HOST || 'localhost';
 const port = process.env.LINNIA_DB_PORT || 5432;
-const dialect = 'postgres';
+const dialect = process.env.LINNIA_DB_DIALECT || 'postgres';
 const logging = process.env.LINNIA_DB_LOGGING || false;
 const operatorsAliases = false;
+const force = true;
 
 const sequelize = new Sequelize(name, user, password, {
   host,
@@ -40,8 +41,7 @@ Object.keys(models).forEach((modelName) => {
   }
 });
 
-sequelize.sync();
-
 models.sequelize = sequelize;
+models.initialize = () => sequelize.sync({ force })
 
 module.exports = models;

@@ -4,8 +4,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       primaryKey: true,
       allowNull: false
-    },
-    provenance: DataTypes.INTEGER
+    }
   });
 
   User.associate = (models) => {
