@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine-node --verbose spec --config LINNIA_IS_TESTING true",
+    "test": "jasmine-node --forceexit --verbose spec --config LINNIA_IS_TESTING true",
     "test-server": "LINNIA_IS_TESTING=true node index.js",
     "start": "nodemon index.js"
   },
