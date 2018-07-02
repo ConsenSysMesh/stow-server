@@ -1,5 +1,3 @@
-const { hexEncodedBytesToIPFSPath } = require('./../utils/encoding');
-
 module.exports = (sequelize, DataTypes) => {
   const Record = sequelize.define('record', {
     dataHash: {
@@ -20,14 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     irisScore: DataTypes.INTEGER,
-    sigCount: DataTypes.INTEGER,
-    ipfsPath: {
-      type: DataTypes.VIRTUAL,
-      get: function() {
-        const ipfsHash = hexEncodedBytesToIPFSPath(this.dataUri);
-        return ipfsHash;
-      }
-    }
+    sigCount: DataTypes.INTEGER
   }, {
     indexes: [
       {
