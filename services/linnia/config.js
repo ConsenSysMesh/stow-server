@@ -7,7 +7,7 @@ const config = {
   linnia: {
     hubAddress: process.env.LINNIA_HUB_ADDRESS
   },
-  httpProvider: process.env.LINNIA_ETH_PROVIDER
+  websocketProvider: process.env.LINNIA_ETH_PROVIDER
 };
 
 module.exports = config;

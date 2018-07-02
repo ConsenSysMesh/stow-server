@@ -20,20 +20,15 @@ module.exports = (linnia) => {
 };
 
 const watchEvent = (event, callback) => {
-  event().watch((err, event) => {
-    if (err) {
-      console.error(err);
-    } else {
-      callback(event);
-    }
-  });
+  event.watch(callback);
 };
 
 const syncNewRecords = (recordsEvent, linnia) => {
   watchEvent(recordsEvent, (event) => {
-    linnia.getRecord(event.args.dataHash)
+    const args = event.returnValues;
+    linnia.getRecord(args.dataHash)
       .then(record => Record.findOrCreate({
-        where: serializeRecord(event, record)
+        where: serializeRecord({ args }, record)
       }));
   });
 };
@@ -42,9 +37,9 @@ const syncRevokedPermissions = (permissionsEvent) => {
   watchEvent(permissionsEvent, (event) => {
     Permission.destroy({
       where: {
-        owner: event.args.owner,
-        viewer: event.args.viewer,
-        dataHash: event.args.dataHash
+        owner: event.returnValues.owner,
+        viewer: event.returnValues.viewer,
+        dataHash: event.returnValues.dataHash
       }
     });
   });
@@ -52,18 +47,19 @@ const syncRevokedPermissions = (permissionsEvent) => {
 
 const syncNewUsers = (usersEvent) => {
   watchEvent(usersEvent, (event) => {
-
+    const args = event.returnValues;
     User.findOrCreate({
-      where: serializeUser(event)
+      where: serializeUser({ args })
     });
   });
 };
 
 const syncNewPermissions = (permissionsEvent, linnia) => {
   watchEvent(permissionsEvent, (event) => {
-    linnia.getPermission(event.args.dataHash, event.args.viewer)
+    const args = event.returnValues;
+    linnia.getPermission(args.dataHash, args.viewer)
       .then(permission => Permission.findOrCreate({
-        where: serializePermission(event, permission)
-      }))
+        where: serializePermission({ args }, permission)
+      }));
   });
 };
