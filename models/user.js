@@ -3,19 +3,12 @@ module.exports = (sequelize, DataTypes) => {
     address: {
       type: DataTypes.STRING,
       primaryKey: true,
-      allowNull: false
+      allowNull: false,
+      set(val) {
+        this.setDataValue('address', val.toLowerCase());
+      }
     }
   });
-
-  User.associate = (models) => {
-    User.belongsToMany(models.Record, {
-      through: models.Permission,
-      as: 'permissionedRecords',
-      otherKey: 'dataHash',
-      sourceKey: 'address',
-      foreignKey: 'viewer'
-    });
-  };
 
   return User;
 };

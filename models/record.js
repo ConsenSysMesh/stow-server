@@ -7,7 +7,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     owner: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      set(val) {
+        this.setDataValue('owner', val.toLowerCase());
+      }
     },
     metadata: {
       type: DataTypes.STRING,
