@@ -12,17 +12,15 @@ module.exports = (linnia) => {
   const {
     LogRecordAdded,
     LogAccessGranted,
-    LogUserRegistered,
-    LogAccessRevoked
+    LogUserRegistered
   } = linnia.events;
 
   return Promise.all([
     syncPastRecords(LogRecordAdded, linnia),
-    syncPastUsers(LogUserRegistered)
+    syncPastUsers(LogUserRegistered),
+    syncPastPermissions(LogAccessGranted, linnia)
   ])
-  .then(() => syncPastPermissions(LogAccessGranted, linnia))
-  .then(() => syncPastRevokedPermissions(LogAccessRevoked))
-  .catch(panic)
+  .catch(panic);
 };
 
 const getPastEvents = (event) => {
@@ -37,40 +35,27 @@ const getPastEvents = (event) => {
 };
 
 const syncPastRecords = (recordsEvent, linnia) => {
-  return getPastEvents(recordsEvent)
-    .then(events => {
-      return Promise.all(events.map((event) => {
-        return linnia.getRecord(event.args.dataHash)
-          .then(record => serializeRecord(event, record));
-      }));
-    })
-    .then(records => Promise.all(records.map((record) => {
-      return Record.findOrCreate({ where: record });
-    })));
+  return getPastEvents(recordsEvent).then(events => {
+    return Promise.all(events.map((event) => {
+      return linnia.getRecord(event.args.dataHash)
+        .then(record => serializeRecord(event, record))
+        .then(record => Record.findOrCreate({
+          where: record
+        }));
+    }));
+  });
 };
 
 const syncPastPermissions = (permissionsEvent, linnia) => {
-  return getPastEvents(permissionsEvent)
-    .then(events => {
-      return Promise.all(events.map((event) => {
-        return linnia.getPermission(event.args.dataHash, event.args.viewer)
-          .then(per => serializePermission(event, per));
-      }));
-    })
-    .then(pers => Promise.all(pers.map((per) => {
-      return Permission.findOrCreate({ where: per });
-    })));
-};
-
-const syncPastRevokedPermissions = (revokeEvents) => {
-  return getPastEvents(revokeEvents)
-    .then(events => Promise.all(events.map(event => Permission.destroy({
-      where: {
-        owner: event.args.owner,
-        viewer: event.args.viewer,
-        dataHash: event.args.dataHash
-      }
-    }))));
+  return getPastEvents(permissionsEvent).then(events => {
+    return Promise.all(events.map((event) => {
+      return linnia.getPermission(event.args.dataHash, event.args.viewer)
+        .then(per => serializePermission(event, per))
+        .then(permission => permission.canAccess && Permission.findOrCreate({
+          where: permission
+        }));
+    }));
+  });
 };
 
 const syncPastUsers = (usersEvent) => {

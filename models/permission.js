@@ -2,11 +2,17 @@ module.exports = (sequelize, DataTypes) => {
   const Permission = sequelize.define('permission', {
     viewer: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      set(val) {
+        this.setDataValue('viewer', val.toLowerCase());
+      }
     },
     owner: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      set(val) {
+        this.setDataValue('owner', val.toLowerCase());
+      }
     },
     dataHash: {
       type: DataTypes.STRING,

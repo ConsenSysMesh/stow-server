@@ -37,8 +37,8 @@ const syncRevokedPermissions = (permissionsEvent) => {
   watchEvent(permissionsEvent, (event) => {
     Permission.destroy({
       where: {
-        owner: event.returnValues.owner,
-        viewer: event.returnValues.viewer,
+        owner: event.returnValues.owner.toLowerCase(),
+        viewer: event.returnValues.viewer.toLowerCase(),
         dataHash: event.returnValues.dataHash
       }
     });

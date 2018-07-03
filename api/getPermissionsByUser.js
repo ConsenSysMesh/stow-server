@@ -1,7 +1,7 @@
 const { Permission } = require('./../models');
 
 module.exports = (req, res, next) => {
-  const address = req.params.address;
+  const address = req.params.address.toLowerCase();
 
   Promise.all([
     asViewer(address),
