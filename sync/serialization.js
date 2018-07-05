@@ -2,7 +2,7 @@ const { bigNumberToNumber } = require('./../utils/types');
 
 const serializeRecord = (recordEvent, record) => {
   return {
-    owner: record.owner,
+    owner: record.owner.toLowerCase(),
     sigCount: bigNumberToNumber(record.sigCount),
     irisScore: bigNumberToNumber(record.irisScore),
     dataHash: record.dataHash,
@@ -13,15 +13,15 @@ const serializeRecord = (recordEvent, record) => {
 
 const serializeUser = (userEvent) => {
   return {
-    address: userEvent.args.user
+    address: userEvent.args.user.toLowerCase()
   };
 };
 
 const serializePermission = (permissionEvent, permission) => {
   return {
     dataHash: permissionEvent.args.dataHash,
-    viewer: permissionEvent.args.viewer,
-    owner: permissionEvent.args.owner,
+    viewer: permissionEvent.args.viewer.toLowerCase(),
+    owner: permissionEvent.args.owner.toLowerCase(),
     dataUri: permission.dataUri,
     canAccess: permission.canAccess
   };
