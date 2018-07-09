@@ -1,7 +1,8 @@
+require('dotenv').config();
 const request = require('request');
-const crypto = require("crypto");
 const mocks = require('./../support/mocks');
 const { cleanDatabase } = require('./../support/helpers');
+const port = process.env.LINNIA_PORT;
 
 describe("GetRecord", () => {
   beforeEach(cleanDatabase);
@@ -22,7 +23,7 @@ describe("GetRecord", () => {
   afterEach(cleanDatabase);
 
   it('should return the record with the data hash', (done) => {
-    request.get({url:`http://localhost:3000/records/${mocks.recordOne.dataHash}`}, (err, httpResponse, body) => {
+    request.get({url:`http://localhost:${port}/records/${mocks.recordOne.dataHash}`}, (err, httpResponse, body) => {
       const record = JSON.parse(body);
       expect(record.dataHash).toEqual(mocks.recordOne.dataHash);
       expect(record.owner).toEqual(mocks.userOne.address);
@@ -31,7 +32,7 @@ describe("GetRecord", () => {
   });
 
   it('should return a 404 if no record was found', (done) => {
-    request.get({url:`http://localhost:3000/records/hbvsdahjvasd`}, (err, httpResponse, body) => {
+    request.get({url:`http://localhost:${port}/records/hbvsdahjvasd`}, (err, httpResponse, body) => {
       expect(httpResponse.statusCode).toEqual(404);
       done();
     });

@@ -1,6 +1,8 @@
+require('dotenv').config();
 const request = require('request');
 const mocks = require('./../support/mocks');
 const { cleanDatabase } = require('./../support/helpers');
+const port = process.env.LINNIA_PORT;
 
 describe("GetPermissionedRecords", () => {
   beforeEach(cleanDatabase);
@@ -31,14 +33,14 @@ describe("GetPermissionedRecords", () => {
   afterEach(cleanDatabase);
 
   it('should return a 200', (done) => {
-    request.get({url:`http://localhost:3000/users/${mocks.userOne.address}/permissions`}, (err, httpResponse, body) => {
+    request.get({url:`http://localhost:${port}/users/${mocks.userOne.address}/permissions`}, (err, httpResponse, body) => {
       expect(httpResponse.statusCode).toEqual(200)
       done();
     });
   })
 
   it("should get the permissions that the user owns", (done) => {
-    request.get({url:`http://localhost:3000/users/${mocks.userOne.address}/permissions`}, (err, httpResponse, body) => {
+    request.get({url:`http://localhost:${port}/users/${mocks.userOne.address}/permissions`}, (err, httpResponse, body) => {
       const parsedBody = JSON.parse(body);
       const asOwner = parsedBody.asOwner;
       const record = asOwner[0];
@@ -50,7 +52,7 @@ describe("GetPermissionedRecords", () => {
   });
 
   it("should return an empty array if user owns no records", (done) => {
-    request.get({url:`http://localhost:3000/users/${mocks.userTwo.address}/permissions`}, (err, httpResponse, body) => {
+    request.get({url:`http://localhost:${port}/users/${mocks.userTwo.address}/permissions`}, (err, httpResponse, body) => {
       const parsedBody = JSON.parse(body);
       const asOwner = parsedBody.asOwner;
       expect(asOwner.length).toEqual(0);
@@ -60,7 +62,7 @@ describe("GetPermissionedRecords", () => {
   });
 
   it("should get the permissions that the user can view", (done) => {
-    request.get({url:`http://localhost:3000/users/${mocks.userTwo.address}/permissions`}, (err, httpResponse, body) => {
+    request.get({url:`http://localhost:${port}/users/${mocks.userTwo.address}/permissions`}, (err, httpResponse, body) => {
       const parsedBody = JSON.parse(body);
       const asViewer = parsedBody.asViewer;
       const record = asViewer[0];
@@ -72,7 +74,7 @@ describe("GetPermissionedRecords", () => {
   });
 
   it("should return an empty array if user can view no records", (done) => {
-    request.get({url:`http://localhost:3000/users/${mocks.userOne.address}/permissions`}, (err, httpResponse, body) => {
+    request.get({url:`http://localhost:${port}/users/${mocks.userOne.address}/permissions`}, (err, httpResponse, body) => {
       const parsedBody = JSON.parse(body);
       const asViewer = parsedBody.asViewer;
       expect(asViewer.length).toEqual(0);
