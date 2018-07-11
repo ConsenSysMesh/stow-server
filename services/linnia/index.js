@@ -2,11 +2,12 @@ const Web3 = require('web3');
 const Linnia = require('linnia');
 const IPFS = require('ipfs-api');
 const config = require('./config');
+const stayInSync = require('../../sync/stayInSync');
 
-const websocketProvider = new Web3.providers.WebsocketProvider(config.websocketProvider);
+var websocketProvider = new Web3.providers.WebsocketProvider(config.websocketProvider);
 const ipfs = new IPFS(config.ipfs);
-const web3 = new Web3(websocketProvider);
-const linnia = new Linnia(web3, ipfs, config.linnia);
+var web3 = new Web3(websocketProvider);
+var linnia = new Linnia(web3, ipfs, config.linnia);
 
 const eventsToTrack = [{
   name: 'LogRecordAdded',
@@ -23,6 +24,15 @@ const eventsToTrack = [{
 }];
 
 const _initialize = () => {
+  // Keep connection alive
+  web3._provider.on('end', (eventObj) => {
+    console.log("WS disconnected. Reconnecting...")
+    websocketProvider = new Web3.providers.WebsocketProvider(config.websocketProvider);
+    web3 = new Web3(websocketProvider);
+    linnia = new Linnia(web3, ipfs, config.linnia);
+    _initialize().then(events => Object.assign(linnia, { events })).then( (l) => stayInSync(l))
+  });
+
   return linnia.getContractInstances()
     .then(getEvents);
 };
@@ -48,6 +58,6 @@ const fixWatch = (event, name, contract) => {
   return event;
 }
 
-module.exports = {
+module.exports = { 
   initialize: () => _initialize().then(events => Object.assign(linnia, { events }))
 };
