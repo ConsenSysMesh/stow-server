@@ -33,9 +33,6 @@ jobs:
       - run:
           name: Start service
           environment:
-            LINNIA_DB_NAME: linnia_db
-            LINNIA_DB_USERNAME: linnia_user
-            LINNIA_DB_PASSWORD: securepassword
             LINNIA_ETH_PROVIDER: http://localhost:7545
             LINNIA_IPFS_HOST: ipfs.infura.io
             LINNIA_IPFS_PORT: 5001
@@ -43,7 +40,6 @@ jobs:
             LINNIA_HUB_ADDRESS: 0x8cdaf0cd259887258bc13a92c0a6da92698644c0
             LINNIA_DB_TEST_NAME: linnia_test_db
             LINNIA_DB_TEST_USERNAME: linnia_user
-            LINNIA_DB_TEST_PASSWORD:
             LINNIA_PORT: 3001
           command: npm run test-server
           background: true
@@ -51,9 +47,6 @@ jobs:
       - run:
           name: Run tests
           environment:
-            LINNIA_DB_NAME: linnia_db
-            LINNIA_DB_USERNAME: linnia_user
-            LINNIA_DB_PASSWORD: securepassword
             LINNIA_ETH_PROVIDER: http://localhost:7545
             LINNIA_IPFS_HOST: ipfs.infura.io
             LINNIA_IPFS_PORT: 5001
@@ -61,7 +54,6 @@ jobs:
             LINNIA_HUB_ADDRESS: 0x8cdaf0cd259887258bc13a92c0a6da92698644c0
             LINNIA_DB_TEST_NAME: linnia_test_db
             LINNIA_DB_TEST_USERNAME: linnia_user
-            LINNIA_DB_TEST_PASSWORD:
             LINNIA_PORT: 3001
           command: npm run test
 
