@@ -31,10 +31,6 @@ jobs:
 
       # run tests!
       - run:
-          command: npm run testrpc
-          background: true
-      - run: sleep 5
-      - run:
           name: Start service
           environment:
             LINNIA_DB_NAME: linnia_db
