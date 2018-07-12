@@ -1,0 +1,61 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:10.5
+      - image: circleci/postgres:9.6.2-alpine
+        environment:
+          POSTGRES_USER: linnia_user
+          POSTGRES_DB: linnia_test_db
+    working_directory: ~/repo
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      - run: npm ci
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      # run tests!
+      - run:
+          name: Start service
+          environment:
+            LINNIA_ETH_PROVIDER: http://localhost:7545
+            LINNIA_IPFS_HOST: ipfs.infura.io
+            LINNIA_IPFS_PORT: 5001
+            LINNIA_IPFS_PROTOCOL: https
+            LINNIA_HUB_ADDRESS: 0x8cdaf0cd259887258bc13a92c0a6da92698644c0
+            LINNIA_DB_TEST_NAME: linnia_test_db
+            LINNIA_DB_TEST_USERNAME: linnia_user
+            LINNIA_PORT: 3001
+          command: npm run test-server
+          background: true
+      - run: sleep 5
+      - run:
+          name: Run tests
+          environment:
+            LINNIA_ETH_PROVIDER: http://localhost:7545
+            LINNIA_IPFS_HOST: ipfs.infura.io
+            LINNIA_IPFS_PORT: 5001
+            LINNIA_IPFS_PROTOCOL: https
+            LINNIA_HUB_ADDRESS: 0x8cdaf0cd259887258bc13a92c0a6da92698644c0
+            LINNIA_DB_TEST_NAME: linnia_test_db
+            LINNIA_DB_TEST_USERNAME: linnia_user
+            LINNIA_PORT: 3001
+          command: npm run test
+
+      - store_artifacts:
+          path: dist

@@ -1,5 +1,5 @@
 const Web3 = require('web3');
-const Linnia = require('linnia');
+const Linnia = require('@linniaprotocol/linnia-july-2018');
 const IPFS = require('ipfs-api');
 const config = require('./config');
 const stayInSync = require('../../sync/stayInSync');
