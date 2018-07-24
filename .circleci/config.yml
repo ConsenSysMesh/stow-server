@@ -43,7 +43,7 @@ jobs:
             LINNIA_PORT: 3001
           command: npm run test-server
           background: true
-      - run: sleep 5
+      - run: sleep 15
       - run:
           name: Run tests
           environment:
