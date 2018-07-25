@@ -10,16 +10,16 @@ var web3 = new Web3(websocketProvider);
 var linnia = new Linnia(web3, ipfs, config.linnia);
 
 const eventsToTrack = [{
-  name: 'LogRecordAdded',
+  name: 'LinniaRecordAdded',
   contract: 'records'
 }, {
-  name: 'LogAccessGranted',
+  name: 'LinniaAccessGranted',
   contract: 'permissions'
 }, {
-  name: 'LogUserRegistered',
+  name: 'LinniaUserRegistered',
   contract: 'users'
 }, {
-  name: 'LogAccessRevoked',
+  name: 'LinniaAccessRevoked',
   contract: 'permissions'
 }];
 
@@ -58,6 +58,6 @@ const fixWatch = (event, name, contract) => {
   return event;
 }
 
-module.exports = { 
+module.exports = {
   initialize: () => _initialize().then(events => Object.assign(linnia, { events }))
 };
