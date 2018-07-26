@@ -10,15 +10,15 @@ const latestBlock = 'latest';
 
 module.exports = (linnia) => {
   const {
-    LogRecordAdded,
-    LogAccessGranted,
-    LogUserRegistered
+    LinniaRecordAdded,
+    LinniaAccessGranted,
+    LinniaUserRegistered
   } = linnia.events;
 
   return Promise.all([
-    syncPastRecords(LogRecordAdded, linnia),
-    syncPastUsers(LogUserRegistered),
-    syncPastPermissions(LogAccessGranted, linnia)
+    syncPastRecords(LinniaRecordAdded, linnia),
+    syncPastUsers(LinniaUserRegistered),
+    syncPastPermissions(LinniaAccessGranted, linnia)
   ])
   .catch(panic);
 };

@@ -7,16 +7,16 @@ const {
 
 module.exports = (linnia) => {
   const {
-    LogAccessGranted,
-    LogRecordAdded,
-    LogUserRegistered,
-    LogAccessRevoked
+    LinniaAccessGranted,
+    LinniaRecordAdded,
+    LinniaUserRegistered,
+    LinniaAccessRevoked
   } = linnia.events;
 
-  syncNewPermissions(LogAccessGranted, linnia);
-  syncRevokedPermissions(LogAccessRevoked);
-  syncNewRecords(LogRecordAdded, linnia);
-  syncNewUsers(LogUserRegistered);
+  syncNewPermissions(LinniaAccessGranted, linnia);
+  syncRevokedPermissions(LinniaAccessRevoked);
+  syncNewRecords(LinniaRecordAdded, linnia);
+  syncNewUsers(LinniaUserRegistered);
 };
 
 const watchEvent = (event, callback) => {
