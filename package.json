@@ -27,7 +27,7 @@
     "express": "^4.16.3",
     "ipfs-api": "^22.0.1",
     "jasmine": "^3.1.0",
-    "@linniaprotocol/linnia-july-2018": "^0.1.6",
+    "@linniaprotocol/linnia-july-2018": "^0.1.7",
     "pg": "^7.4.3",
     "rxjs": "^6.2.1",
     "sequelize": "^4.37.10",
