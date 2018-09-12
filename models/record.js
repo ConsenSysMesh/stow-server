@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     metadata: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false
     },
     dataUri: {
