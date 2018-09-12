@@ -11,6 +11,13 @@ const serializeRecord = (recordEvent, record) => {
   };
 };
 
+const serializeSigUpdate = (sigCount, irisScore) => {
+  return {
+    sigCount: bigNumberToNumber(record.sigCount),
+    irisScore: bigNumberToNumber(record.irisScore)
+  };
+};
+
 const serializeUser = (userEvent) => {
   return {
     address: userEvent.args.user.toLowerCase()

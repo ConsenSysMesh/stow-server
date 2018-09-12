@@ -1,26 +1,51 @@
 const { User, Record, Permission } = require('./../models');
+
 const {
   serializeRecord,
   serializeUser,
-  serializePermission
+  serializePermission,
+  serializeSigUpdate
 } = require('./serialization');
 
 module.exports = (linnia) => {
+
   const {
     LinniaAccessGranted,
     LinniaRecordAdded,
     LinniaUserRegistered,
-    LinniaAccessRevoked
+    LinniaAccessRevoked,
+    LinniaRecordSigAdded
   } = linnia.events;
 
   syncNewPermissions(LinniaAccessGranted, linnia);
   syncRevokedPermissions(LinniaAccessRevoked);
   syncNewRecords(LinniaRecordAdded, linnia);
   syncNewUsers(LinniaUserRegistered);
+  syncNewSigUpdate(LinniaRecordSigAdded, linnia);
 };
 
 const watchEvent = (event, callback) => {
   event.watch(callback);
+};
+
+const syncNewSigUpdate = (sigEvent, linnia) => {
+  watchEvent(sigEvent, (event) => {
+    const args = event.returnValues;
+    let updatedRecord;
+    linnia.getRecord(args.dataHash)
+      .then(record => {
+        updatedRecord = record;
+        return Record.find({
+        where: {
+          dataHash: args.dataHash
+        }
+        })
+      }).then(record => {
+        record.update(
+          serializeSigUpdate(updatedRecord.sigCount, updatedRecord.irisScore)
+      )
+    });
+  });
 };
 
 const syncNewRecords = (recordsEvent, linnia) => {
