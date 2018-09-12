@@ -13,8 +13,8 @@ const serializeRecord = (recordEvent, record) => {
 
 const serializeSigUpdate = (sigCount, irisScore) => {
   return {
-    sigCount: bigNumberToNumber(record.sigCount),
-    irisScore: bigNumberToNumber(record.irisScore)
+    sigCount: bigNumberToNumber(sigCount),
+    irisScore: bigNumberToNumber(irisScore)
   };
 };
 
@@ -37,5 +37,6 @@ const serializePermission = (permissionEvent, permission) => {
 module.exports = {
   serializeRecord,
   serializeUser,
-  serializePermission
+  serializePermission,
+  serializeSigUpdate
 };
