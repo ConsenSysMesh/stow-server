@@ -40,12 +40,13 @@ const syncNewSigUpdate = (sigEvent, linnia) => {
           dataHash: args.dataHash
         }
         })
-      }).then(record => {
-        record.update(
+        .then(record => {
+        record && record.update(
           serializeSigUpdate(updatedRecord.sigCount, updatedRecord.irisScore)
       )
     });
   });
+});
 };
 
 const syncNewRecords = (recordsEvent, linnia) => {
