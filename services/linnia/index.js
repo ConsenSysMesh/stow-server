@@ -21,6 +21,9 @@ const eventsToTrack = [{
 }, {
   name: 'LinniaAccessRevoked',
   contract: 'permissions'
+},{
+  name: 'LinniaRecordSigAdded',
+  contract: 'records'
 }];
 
 const _initialize = () => {
