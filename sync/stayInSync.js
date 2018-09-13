@@ -31,10 +31,8 @@ const watchEvent = (event, callback) => {
 const syncNewSigUpdate = (sigEvent, linnia) => {
   watchEvent(sigEvent, (event) => {
     const args = event.returnValues;
-    let updatedRecord;
     linnia.getRecord(args.dataHash)
-      .then(record => {
-        updatedRecord = record;
+      .then(updatedRecord => {
         return Record.find({
         where: {
           dataHash: args.dataHash
