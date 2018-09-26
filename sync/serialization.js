@@ -18,6 +18,13 @@ const serializeSigUpdate = (sigCount, irisScore) => {
   };
 };
 
+const serializeAttestation = (attestationEvent) => {
+  return {
+    dataHash: attestationEvent.args.dataHash,
+    attestator: attestationEvent.args.attestator.toLowerCase()
+  };
+};
+
 const serializeUser = (userEvent) => {
   return {
     address: userEvent.args.user.toLowerCase()
@@ -38,5 +45,6 @@ module.exports = {
   serializeRecord,
   serializeUser,
   serializePermission,
-  serializeSigUpdate
+  serializeSigUpdate,
+  serializeAttestation
 };
