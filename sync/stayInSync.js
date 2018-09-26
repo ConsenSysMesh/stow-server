@@ -1,10 +1,11 @@
-const { User, Record, Permission } = require('./../models');
+const { User, Record, Permission, Attestation } = require('./../models');
 
 const {
   serializeRecord,
   serializeUser,
   serializePermission,
-  serializeSigUpdate
+  serializeSigUpdate,
+  serializeAttestation
 } = require('./serialization');
 
 module.exports = (linnia) => {
@@ -34,17 +35,22 @@ const syncNewSigUpdate = (sigEvent, linnia) => {
     linnia.getRecord(args.dataHash)
       .then(updatedRecord => {
         return Record.find({
-        where: {
-          dataHash: args.dataHash
-        }
-        })
-        .then(record => {
-        record && record.update(
-          serializeSigUpdate(updatedRecord.sigCount, updatedRecord.irisScore)
-      )
-    });
+            where: {
+              dataHash: args.dataHash
+            }
+          })
+          .then(record => {
+            return record && record.update(
+              serializeSigUpdate(updatedRecord.sigCount, updatedRecord.irisScore)
+            )
+          })
+          .then(() => {
+            Attestation.findOrCreate({
+              where: serializeAttestation(sigEvent)
+            })
+          });
+      });
   });
-});
 };
 
 const syncNewRecords = (recordsEvent, linnia) => {

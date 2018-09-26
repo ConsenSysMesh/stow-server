@@ -13,6 +13,7 @@ const initialize = () => {
   app.get('/records', require('./records'));
   app.get('/records/:dataHash', require('./recordByDataHash'));
   app.get('/users/:address/permissions', require('./getPermissionsByUser'));
+  app.get('/attestations/:dataHash', require('./attestations'));
 
   app.use(errorHandler);
 
@@ -24,4 +25,3 @@ const initialize = () => {
 module.exports = {
   initialize
 };
-

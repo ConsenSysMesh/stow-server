@@ -1,13 +1,15 @@
 const {
   User,
   Record,
-  Permission
+  Permission,
+  Attestation
 } = require('./../models');
 
 const {
   serializeRecord,
   serializeUser,
-  serializePermission
+  serializePermission,
+  serializeAttestation
 } = require('./serialization');
 
 module.exports = (linnia, blockNumber) => {
@@ -16,12 +18,14 @@ module.exports = (linnia, blockNumber) => {
     LinniaRecordAdded,
     LinniaAccessGranted,
     LinniaUserRegistered,
+    LinniaRecordSigAdded
   } = linnia.events;
 
   return Promise.all([
       syncPastRecords(LinniaRecordAdded, linnia, blockNumber),
       syncPastUsers(LinniaUserRegistered, blockNumber),
-      syncPastPermissions(LinniaAccessGranted, linnia, blockNumber)
+      syncPastPermissions(LinniaAccessGranted, linnia, blockNumber),
+      syncPastAttestations(LinniaRecordSigAdded, blockNumber)
     ])
     .catch(panic);
 };
@@ -82,7 +86,6 @@ const syncPastPermissions = (permissionsEvent, linnia, blockNumber) => {
 };
 
 const syncPastUsers = (usersEvent, blockNumber) => {
-  let totalUsers, count;
   return getPastEvents(usersEvent, blockNumber).then(eventsArrays => {
       let events = [].concat.apply([], eventsArrays);
       return events.map(serializeUser);
@@ -91,6 +94,19 @@ const syncPastUsers = (usersEvent, blockNumber) => {
       // Add users to DB
       return User.findOrCreate({
         where: user
+      });
+    })));
+};
+
+const syncPastAttestations = (attestationsEvent, blockNumber) => {
+  return getPastEvents(attestationsEvent, blockNumber).then(eventsArrays => {
+      let events = [].concat.apply([], eventsArrays);
+      return events.map(serializeAttestation);
+    })
+    .then(attestations => Promise.all(attestations.map((attestation) => {
+      // Add attestations to DB
+      return Attestation.findOrCreate({
+        where: attestation
       });
     })));
 };
