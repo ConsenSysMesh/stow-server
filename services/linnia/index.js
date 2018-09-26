@@ -21,7 +21,7 @@ const eventsToTrack = [{
 }, {
   name: 'LinniaAccessRevoked',
   contract: 'permissions'
-},{
+}, {
   name: 'LinniaRecordSigAdded',
   contract: 'records'
 }];
@@ -33,7 +33,10 @@ const _initialize = () => {
     websocketProvider = new Web3.providers.WebsocketProvider(config.websocketProvider);
     web3 = new Web3(websocketProvider);
     linnia = new Linnia(web3, ipfs, config.linnia);
-    _initialize().then(events => Object.assign(linnia, { events })).then( (l) => stayInSync(l))
+    _initialize().then(events => {
+      console.log(events)
+      Object.assign(linnia, { events })
+    }).then((l) => stayInSync(l))
   });
 
   return linnia.getContractInstances()
