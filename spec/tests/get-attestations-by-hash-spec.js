@@ -15,8 +15,8 @@ const port = process.env.LINNIA_PORT;
       dataHash: mocks.attestations[i].dataHash,
       attestator: mocks.attestations[i].attestator
     });
-    }
-    
+    };
+
     done();
   });
 
@@ -25,7 +25,7 @@ const port = process.env.LINNIA_PORT;
 
   it('should return the attestations with the data hash (one and two)', (done) => {
     request.get({url:`http://localhost:${port}/attestations/${mocks.attestationOne.dataHash}`}, (err, httpResponse, body) => {
-      const attestations = JSON.parse(body)
+      const attestations = JSON.parse(body);
       expect(attestations.length).toEqual(2);
       expect(attestations[0].dataHash).toEqual(mocks.attestationOne.dataHash);
       expect(attestations[1].dataHash).toEqual(mocks.attestationTwo.dataHash);
@@ -37,7 +37,7 @@ const port = process.env.LINNIA_PORT;
 
   it('should return the attestations with the data hash (three)', (done) => {
     request.get({url:`http://localhost:${port}/attestations/${mocks.attestationThree.dataHash}`}, (err, httpResponse, body) => {
-      const attestations = JSON.parse(body)
+      const attestations = JSON.parse(body);
       expect(attestations.length).toEqual(1);
       expect(attestations[0].dataHash).toEqual(mocks.attestationThree.dataHash);
       expect(attestations[0].attestator).toEqual(mocks.attestationThree.attestator);
@@ -48,7 +48,7 @@ const port = process.env.LINNIA_PORT;
 
   it('should return the attestations with the data hash (four and five)', (done) => {
     request.get({url:`http://localhost:${port}/attestations/${mocks.attestationFour.dataHash}`}, (err, httpResponse, body) => {
-      const attestations = JSON.parse(body)
+      const attestations = JSON.parse(body);
       expect(attestations.length).toEqual(2);
       expect(attestations[0].dataHash).toEqual(mocks.attestationFour.dataHash);
       expect(attestations[1].dataHash).toEqual(mocks.attestationFive.dataHash);
