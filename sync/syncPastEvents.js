@@ -36,7 +36,7 @@ const getPastEvents = (event, blockNumber) => {
   let fromBlock = 0;
   let toBlock = 3800000;
 
-  while (toBlock < blockNumber + step) {
+  while (fromBlock < blockNumber + step) {
     results.push(
       new Promise((resolve, reject) => {
         return event({}, {
