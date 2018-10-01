@@ -43,7 +43,6 @@ const getPastEvents = (event, blockNumber) => {
           fromBlock,
           toBlock,
         }).get((err, events) => {
-          console.log(events);
           err ? reject(err) : resolve(events);
         });
       })
