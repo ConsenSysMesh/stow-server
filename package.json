@@ -7,7 +7,8 @@
   "scripts": {
     "test": "jasmine-node --forceexit --verbose spec --config LINNIA_IS_TESTING true",
     "test-server": "LINNIA_IS_TESTING=true node index.js",
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "docker": "docker build -t linnia-server --build-arg NPM_TOKEN=${NPM_TOKEN} ."
   },
   "repository": {
     "type": "git",
