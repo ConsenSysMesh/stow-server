@@ -1,6 +1,7 @@
 FROM node:8
 
 # Create app directory
+RUN mkdir -p /usr/src/linnia-server
 WORKDIR /usr/src/linnia-server
 
 # Install app dependencies
@@ -19,4 +20,5 @@ RUN npm install
 COPY . .
 
 EXPOSE 3000
-CMD [ "npm", "start" ]
+
+CMD [ "node", "index.js" ]
