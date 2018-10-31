@@ -46,7 +46,7 @@ const syncNewSigUpdate = (sigEvent, linnia) => {
           })
           .then(() => {
             Attestation.findOrCreate({
-              where: serializeAttestation(sigEvent)
+              where: serializeAttestation({args})
             })
           });
       });
