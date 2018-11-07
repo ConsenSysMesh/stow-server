@@ -19,7 +19,13 @@ const sequelize = new Sequelize(name, user, password, {
   port,
   dialect,
   logging,
-  operatorsAliases
+  operatorsAliases,
+  pool: {
+    max: 50,
+    min: 0,
+    idle: 20000,
+    acquire: 20000
+  }
 });
 
 let models = {};
