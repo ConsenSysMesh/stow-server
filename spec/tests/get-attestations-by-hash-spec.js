@@ -13,7 +13,7 @@ const port = process.env.LINNIA_PORT;
     for (let i = 0; i < 5; i++) {
       await Attestation.create({
       dataHash: mocks.attestations[i].dataHash,
-      attestator: mocks.attestations[i].attestator
+      attester: mocks.attestations[i].attester
     });
     };
 
@@ -29,8 +29,8 @@ const port = process.env.LINNIA_PORT;
       expect(attestations.length).toEqual(2);
       expect(attestations[0].dataHash).toEqual(mocks.attestationOne.dataHash);
       expect(attestations[1].dataHash).toEqual(mocks.attestationTwo.dataHash);
-      expect(attestations[0].attestator).toEqual(mocks.attestationOne.attestator);
-      expect(attestations[1].attestator).toEqual(mocks.attestationTwo.attestator);
+      expect(attestations[0].attester).toEqual(mocks.attestationOne.attester);
+      expect(attestations[1].attester).toEqual(mocks.attestationTwo.attester);
       done();
     });
   });
@@ -40,7 +40,7 @@ const port = process.env.LINNIA_PORT;
       const attestations = JSON.parse(body);
       expect(attestations.length).toEqual(1);
       expect(attestations[0].dataHash).toEqual(mocks.attestationThree.dataHash);
-      expect(attestations[0].attestator).toEqual(mocks.attestationThree.attestator);
+      expect(attestations[0].attester).toEqual(mocks.attestationThree.attester);
       done();
     });
   });
@@ -52,8 +52,8 @@ const port = process.env.LINNIA_PORT;
       expect(attestations.length).toEqual(2);
       expect(attestations[0].dataHash).toEqual(mocks.attestationFour.dataHash);
       expect(attestations[1].dataHash).toEqual(mocks.attestationFive.dataHash);
-      expect(attestations[0].attestator).toEqual(mocks.attestationFour.attestator);
-      expect(attestations[1].attestator).toEqual(mocks.attestationFive.attestator)
+      expect(attestations[0].attester).toEqual(mocks.attestationFour.attester);
+      expect(attestations[1].attester).toEqual(mocks.attestationFive.attester)
       done();
     });
   });

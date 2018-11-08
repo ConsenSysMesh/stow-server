@@ -21,7 +21,7 @@ const serializeSigUpdate = (sigCount, irisScore) => {
 const serializeAttestation = (attestationEvent) => {
   return {
     dataHash: attestationEvent.args.dataHash,
-    attestator: attestationEvent.args.attestator.toLowerCase()
+    attester: attestationEvent.args.attester.toLowerCase()
   };
 };
 
