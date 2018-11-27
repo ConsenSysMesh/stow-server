@@ -8,31 +8,31 @@ const {
   serializeAttestation
 } = require('./serialization');
 
-module.exports = (linnia) => {
+module.exports = stow => {
 
   const {
-    LinniaAccessGranted,
-    LinniaRecordAdded,
-    LinniaUserRegistered,
-    LinniaAccessRevoked,
-    LinniaRecordSigAdded
-  } = linnia.events;
+    StowAccessGranted,
+    StowRecordAdded,
+    StowUserRegistered,
+    StowAccessRevoked,
+    StowRecordSigAdded
+  } = stow.events;
 
-  syncNewPermissions(LinniaAccessGranted, linnia);
-  syncRevokedPermissions(LinniaAccessRevoked);
-  syncNewRecords(LinniaRecordAdded, linnia);
-  syncNewUsers(LinniaUserRegistered);
-  syncNewSigUpdate(LinniaRecordSigAdded, linnia);
+  syncNewPermissions(StowAccessGranted, stow);
+  syncRevokedPermissions(StowAccessRevoked);
+  syncNewRecords(StowRecordAdded, stow);
+  syncNewUsers(StowUserRegistered);
+  syncNewSigUpdate(StowRecordSigAdded, stow);
 };
 
 const watchEvent = (event, callback) => {
   event.watch(callback);
 };
 
-const syncNewSigUpdate = (sigEvent, linnia) => {
+const syncNewSigUpdate = (sigEvent, stow) => {
   watchEvent(sigEvent, (event) => {
     const args = event.returnValues;
-    linnia.getRecord(args.dataHash)
+    stow.getRecord(args.dataHash)
       .then(updatedRecord => {
         return Record.find({
             where: {
@@ -53,10 +53,10 @@ const syncNewSigUpdate = (sigEvent, linnia) => {
   });
 };
 
-const syncNewRecords = (recordsEvent, linnia) => {
+const syncNewRecords = (recordsEvent, stow) => {
   watchEvent(recordsEvent, (event) => {
     const args = event.returnValues;
-    linnia.getRecord(args.dataHash)
+    stow.getRecord(args.dataHash)
       .then(record => Record.findOrCreate({
         where: serializeRecord({ args }, record)
       }));
@@ -84,10 +84,10 @@ const syncNewUsers = (usersEvent) => {
   });
 };
 
-const syncNewPermissions = (permissionsEvent, linnia) => {
+const syncNewPermissions = (permissionsEvent, stow) => {
   watchEvent(permissionsEvent, (event) => {
     const args = event.returnValues;
-    linnia.getPermission(args.dataHash, args.viewer)
+    stow.getPermission(args.dataHash, args.viewer)
       .then(permission => Permission.findOrCreate({
         where: serializePermission({ args }, permission)
       }));

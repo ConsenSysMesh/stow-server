@@ -1,28 +1,28 @@
 const Web3 = require('web3');
-const Linnia = require('@linniaprotocol/linnia-july-2018');
+const Stow = require('@stowprotocol/stow-js');
 const IPFS = require('ipfs-api');
 const config = require('./config');
 const stayInSync = require('../../sync/stayInSync');
+const { hubAddress, websocketProvider } = config;
 
-var websocketProvider = new Web3.providers.WebsocketProvider(config.websocketProvider);
-const ipfs = new IPFS(config.ipfs);
-var web3 = new Web3(websocketProvider);
-var linnia = new Linnia(web3, ipfs, config.linnia);
+var provider = new Web3.providers.WebsocketProvider(websocketProvider);
+var web3 = new Web3(provider);
+var stow = new Stow(web3, { hubAddress });
 
 const eventsToTrack = [{
-  name: 'LinniaRecordAdded',
+  name: 'StowRecordAdded',
   contract: 'records'
 }, {
-  name: 'LinniaAccessGranted',
+  name: 'StowAccessGranted',
   contract: 'permissions'
 }, {
-  name: 'LinniaUserRegistered',
+  name: 'StowUserRegistered',
   contract: 'users'
 }, {
-  name: 'LinniaAccessRevoked',
+  name: 'StowAccessRevoked',
   contract: 'permissions'
 }, {
-  name: 'LinniaRecordSigAdded',
+  name: 'StowRecordSigAdded',
   contract: 'records'
 }];
 
@@ -32,11 +32,12 @@ const _initialize = () => {
     console.log("WS disconnected. Reconnecting...")
     websocketProvider = new Web3.providers.WebsocketProvider(config.websocketProvider);
     web3 = new Web3(websocketProvider);
-    linnia = new Linnia(web3, ipfs, config.linnia);
-    _initialize().then(events => Object.assign(linnia, { events })).then((l) => stayInSync(l))
+    stow = new Stow(web3, { hubAddress });
+    _initialize().then(events => Object.assign(stow, { events })).then((l) => stayInSync(l))
   });
 
-  return linnia.getContractInstances()
+  return stow
+    .getContractInstances()
     .then(getEvents);
 };
 
@@ -62,5 +63,5 @@ const fixWatch = (event, name, contract) => {
 }
 
 module.exports = {
-  initialize: () => _initialize().then(events => Object.assign(linnia, { events }))
+  initialize: () => _initialize().then(events => Object.assign(stow, { events }))
 };
