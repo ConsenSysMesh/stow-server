@@ -4,10 +4,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    attestator: {
+    attester: {
       type: DataTypes.STRING,
       set(val) {
-        this.setDataValue('attestator', val.toLowerCase());
+        this.setDataValue('attester', val.toLowerCase());
       }
     }
   });

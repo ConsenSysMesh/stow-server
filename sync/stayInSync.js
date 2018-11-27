@@ -46,7 +46,7 @@ const syncNewSigUpdate = (sigEvent, stow) => {
           })
           .then(() => {
             Attestation.findOrCreate({
-              where: serializeAttestation(sigEvent)
+              where: serializeAttestation({args})
             })
           });
       });
