@@ -5,7 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine-node --forceexit --verbose spec --config LINNIA_IS_TESTING true",
+    "test": "jasmine-node --forceexit --verbose spec --config STOW_IS_TESTING true",
     "test-server": "LINNIA_IS_TESTING=true node index.js",
     "start": "nodemon index.js",
     "docker": "docker build -t stow-server --build-arg NPM_TOKEN=${NPM_TOKEN} ."
