@@ -12,20 +12,20 @@ const {
   serializeAttestation
 } = require('./serialization');
 
-module.exports = (linnia, blockNumber) => {
+module.exports = (stow, blockNumber) => {
 
   const {
-    LinniaRecordAdded,
-    LinniaAccessGranted,
-    LinniaUserRegistered,
-    LinniaRecordSigAdded
-  } = linnia.events;
+    StowRecordAdded,
+    StowAccessGranted,
+    StowUserRegistered,
+    StowRecordSigAdded
+  } = stow.events;
 
   return Promise.all([
-      syncPastRecords(LinniaRecordAdded, linnia, blockNumber),
-      syncPastUsers(LinniaUserRegistered, blockNumber),
-      syncPastPermissions(LinniaAccessGranted, linnia, blockNumber),
-      syncPastAttestations(LinniaRecordSigAdded, blockNumber)
+      syncPastRecords(StowRecordAdded, stow, blockNumber),
+      syncPastUsers(StowUserRegistered, blockNumber),
+      syncPastPermissions(StowAccessGranted, stow, blockNumber),
+      syncPastAttestations(StowRecordSigAdded, blockNumber)
     ])
     .catch(panic);
 };
@@ -53,11 +53,11 @@ const getPastEvents = (event, blockNumber) => {
   return Promise.all(results);
 };
 
-const syncPastRecords = (recordsEvent, linnia, blockNumber) => {
+const syncPastRecords = (recordsEvent, stow, blockNumber) => {
   return getPastEvents(recordsEvent, blockNumber).then(eventsArrays => {
     let events = [].concat.apply([], eventsArrays);
     return Promise.all(events.map((event) => {
-      return linnia.getRecord(event.args.dataHash)
+      return stow.getRecord(event.args.dataHash)
         .then(record => serializeRecord(event, record))
         .then(record => {
           // Add record to DB
@@ -69,11 +69,11 @@ const syncPastRecords = (recordsEvent, linnia, blockNumber) => {
   });
 };
 
-const syncPastPermissions = (permissionsEvent, linnia, blockNumber) => {
+const syncPastPermissions = (permissionsEvent, stow, blockNumber) => {
   return getPastEvents(permissionsEvent, blockNumber).then(eventsArrays => {
     let events = [].concat.apply([], eventsArrays);
     return Promise.all(events.map((event) => {
-      return linnia.getPermission(event.args.dataHash, event.args.viewer)
+      return stow.getPermission(event.args.dataHash, event.args.viewer)
         .then(per => serializePermission(event, per))
         .then(permission => {
           // Add permission to DB

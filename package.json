@@ -1,26 +1,27 @@
 {
-  "name": "@linniaprotocol/linnia-server",
+  "name": "@stowprotocol/stow-server",
   "private": true,
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine-node --forceexit --verbose spec --config LINNIA_IS_TESTING true",
-    "test-server": "LINNIA_IS_TESTING=true node index.js",
+    "test": "jasmine-node --forceexit --verbose spec --config STOW_IS_TESTING true",
+    "test-server": "STOW_IS_TESTING=true node index.js",
     "start": "nodemon index.js",
     "docker": "docker build -t stow-server --build-arg NPM_TOKEN=${NPM_TOKEN} ."
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ConsenSys/linnia-server.git"
+    "url": "git+https://github.com/ConsenSys/stow-server.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ConsenSys/linnia-server/issues"
+    "url": "https://github.com/ConsenSys/stow-server/issues"
   },
-  "homepage": "https://github.com/ConsenSys/linnia-server#readme",
+  "homepage": "https://github.com/ConsenSys/stow-server#readme",
   "dependencies": {
+    "@stowprotocol/stow-js": "^0.3.6",
     "bs58": "^4.0.1",
     "cors": "^2.8.4",
     "dotenv": "^6.0.0",
@@ -28,7 +29,6 @@
     "express": "^4.16.3",
     "ipfs-api": "^22.0.1",
     "jasmine": "^3.1.0",
-    "@linniaprotocol/linnia-july-2018": "^0.1.7",
     "pg": "^7.4.3",
     "rxjs": "^6.2.1",
     "sequelize": "^4.37.10",

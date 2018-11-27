@@ -9,7 +9,6 @@ const initialize = () => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(cors());
-
   app.get('/records', require('./records'));
   app.get('/records/:dataHash', require('./recordByDataHash'));
   app.get('/users/:address/permissions', require('./getPermissionsByUser'));

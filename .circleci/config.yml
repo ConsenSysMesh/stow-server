@@ -33,28 +33,22 @@ jobs:
       - run:
           name: Start service
           environment:
-            LINNIA_ETH_PROVIDER: http://localhost:7545
-            LINNIA_IPFS_HOST: ipfs.infura.io
-            LINNIA_IPFS_PORT: 5001
-            LINNIA_IPFS_PROTOCOL: https
-            LINNIA_HUB_ADDRESS: 0x8cdaf0cd259887258bc13a92c0a6da92698644c0
-            LINNIA_DB_TEST_NAME: linnia_test_db
-            LINNIA_DB_TEST_USERNAME: linnia_user
-            LINNIA_PORT: 3001
+            STOW_ETH_PROVIDER: http://localhost:7545
+            STOW_HUB_ADDRESS: 0x8cdaf0cd259887258bc13a92c0a6da92698644c0
+            STOW_DB_TEST_NAME: linnia_test_db
+            STOW_DB_TEST_USERNAME: linnia_user
+            STOW_PORT: 3001
           command: npm run test-server
           background: true
       - run: sleep 15
       - run:
           name: Run tests
           environment:
-            LINNIA_ETH_PROVIDER: http://localhost:7545
-            LINNIA_IPFS_HOST: ipfs.infura.io
-            LINNIA_IPFS_PORT: 5001
-            LINNIA_IPFS_PROTOCOL: https
-            LINNIA_HUB_ADDRESS: 0x8cdaf0cd259887258bc13a92c0a6da92698644c0
-            LINNIA_DB_TEST_NAME: linnia_test_db
-            LINNIA_DB_TEST_USERNAME: linnia_user
-            LINNIA_PORT: 3001
+            STOW_ETH_PROVIDER: http://localhost:7545
+            STOW_HUB_ADDRESS: 0x8cdaf0cd259887258bc13a92c0a6da92698644c0
+            STOW_DB_TEST_NAME: linnia_test_db
+            STOW_DB_TEST_USERNAME: linnia_user
+            STOW_PORT: 3001
           command: npm run test
 
       - store_artifacts:
