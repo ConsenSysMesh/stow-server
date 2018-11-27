@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = process.env.LINNIA_PORT;
+const port = process.env.STOW_PORT;
 const bodyParser = require('body-parser');
 const errorHandler = require('./errorHandler');
 const cors = require('cors');
