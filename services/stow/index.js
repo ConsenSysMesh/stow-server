@@ -30,8 +30,8 @@ const _initialize = () => {
   // Keep connection alive
   web3._provider.on('end', (eventObj) => {
     console.log("WS disconnected. Reconnecting...")
-    websocketProvider = new Web3.providers.WebsocketProvider(config.websocketProvider);
-    web3 = new Web3(websocketProvider);
+    provider = new Web3.providers.WebsocketProvider(websocketProvider);
+    web3 = new Web3(provider);
     stow = new Stow(web3, { hubAddress });
     _initialize().then(events => Object.assign(stow, { events })).then((l) => stayInSync(l))
   });
